@@ -1,0 +1,17 @@
+﻿<Window x:Class="NovelTech.libraries.ui.popups.Popup_text_document"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NovelTech.libraries.ui.popups"
+        mc:Ignorable="d"
+        Title="Popup_text_document" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="375"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="tb_main" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True"/>
+        <Button x:Name="b_save" Content="Save" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="b_save_Click"/>
+    </Grid>
+</Window>

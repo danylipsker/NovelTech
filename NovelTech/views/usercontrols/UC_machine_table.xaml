@@ -1,0 +1,244 @@
+﻿<UserControl x:Class="NovelTech.views.usercontrols.UC_machine_table"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NovelTech.views.usercontrols"
+             xmlns:v="clr-namespace:NovelTech.viewmodels"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:freez="clr-namespace:WPFLibrary.freezables;assembly=WPFLibrary"
+             mc:Ignorable="d" 
+             Background="White" Width="1000" Height="650">
+    <UserControl.Resources>
+        <freez:BindingProxy x:Key="UCProxy" Data="{Binding }"/>
+    </UserControl.Resources>
+    <Grid x:Name="g_main">
+        <!--#region Grid.Definition-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="450"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition x:Name="TableWidth" Width="600"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <!--#endregion-->
+
+
+
+        <local:UC_tool x:Name="Saw" Grid.Column="1" HorizontalAlignment="Left" Margin="25,0,0,0" Grid.Row="1" VerticalAlignment="Top" Panel.ZIndex="1">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding Path=EditToolCommand}"
+                                                           CommandParameter="{Binding ElementName=Saw}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:UC_tool>
+        <TextBlock x:Name="SawInfo" Text="text" Grid.Column="1" TextWrapping="Wrap" FontSize="12" HorizontalAlignment="Left" Margin="73,0,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Height="87" Width="147"/>
+
+        <local:UC_tool x:Name="Drill" Grid.Column="1" HorizontalAlignment="Left" Margin="225,0,0,0" Grid.Row="1" VerticalAlignment="Top" Panel.ZIndex="1">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding Path=EditToolCommand}"
+                                                           CommandParameter="{Binding ElementName=Drill}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </local:UC_tool>
+        <TextBlock x:Name="DrillInfo" Text="text" Grid.Column="1" TextWrapping="Wrap" FontSize="12" HorizontalAlignment="Left" Margin="273,3,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Height="87" Width="147"/>
+
+        <local:UC_tool Grid.Column="1" HorizontalAlignment="Left" Margin="425,0,0,0" Grid.Row="1" VerticalAlignment="Top" Panel.ZIndex="-1"/>
+        <local:UC_tool Grid.Column="1" HorizontalAlignment="Left" Margin="125,11,0,0" Grid.Row="4" Height="90" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="-1">
+            <local:UC_tool.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:UC_tool.RenderTransform>
+        </local:UC_tool>
+        <local:UC_tool Grid.Column="1" HorizontalAlignment="Left" Margin="325,11,0,0" Grid.Row="4" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="-1">
+            <local:UC_tool.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:UC_tool.RenderTransform>
+        </local:UC_tool>
+        <local:UC_tool Grid.Column="1" HorizontalAlignment="Left" Margin="525,11,0,0" Grid.Row="4" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="-1">
+            <local:UC_tool.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:UC_tool.RenderTransform>
+        </local:UC_tool>
+
+        <!--#region Pincher Values 0|0-->
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Grid.RowSpan="2">
+            <TextBlock Margin="0,0,0,10">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Pincher X : {0}">
+                        <Binding Path="pincherX" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Margin="0,0,0,10">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Pincher Y : {0}">
+                        <Binding Path="pincherY" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Pincher Angle : {0}">
+                        <Binding Path="pincherAngle" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+
+        <!--#endregion-->
+
+        <!--#region Top Tools 0|1-->
+        <ItemsControl x:Name="noNeedUiTools" ItemsSource="{Binding tools}" Grid.Column="1" Grid.RowSpan="3" Margin="0,3,0,447">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Canvas>
+                        <local:UC_tool DataContext="{Binding }" Canvas.Left="{Binding position}" x:Name="ucTool">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding Source={StaticResource UCProxy}, Path=Data.EditToolCommand}"
+                                                           CommandParameter="{Binding }"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </local:UC_tool>
+
+                    </Canvas>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!--#endregion-->
+        <!--#region Machine 1|1-->
+        <Border BorderThickness="3" BorderBrush="Black" Grid.Column="1" Grid.Row="2" Panel.ZIndex="2">
+            <Grid x:Name="Workspace" Background="#FFA4A4A4" HorizontalAlignment="Left" Width="594" VerticalAlignment="Bottom" Height="444" Panel.ZIndex="2">
+                <local:UC_material Panel.ZIndex="2"/>
+            </Grid>
+        </Border>
+        <!--#endregion-->
+
+        <!--#region Machine Values 0|2 -->
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Grid.Column="2" Grid.RowSpan="2">
+            <TextBlock Margin="0,0,0,10">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Machine Width  : {0}">
+                        <Binding Path="machineWidth" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Machine Height : {0}">
+                        <Binding Path="machineHeight" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+        <ScrollBar x:Name="WidthSB" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Margin="13,317,0,0" Maximum="1000000" Minimum="-1000000" Scroll="ChangeWidth"/>
+        <TextBlock x:Name="WidthValue" HorizontalAlignment="Left" Margin="35,325,0,0" Grid.Row="2" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+        <ScrollBar x:Name="HeightSB" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Margin="13,357,0,0" Maximum="1000000" Minimum="-1000000" Scroll="ChangeHeight"/>
+        <TextBlock x:Name="HeightValue" HorizontalAlignment="Left" Margin="35,366,0,0" Grid.Row="2" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+        <TextBlock x:Name="ratio" HorizontalAlignment="Left" Margin="35,345,0,0" Grid.Row="2" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ListBox x:Name="points" Grid.RowSpan="2"/>
+        <ScrollBar x:Name="RPMSB" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Margin="154,42,0,0" Maximum="1000000" Minimum="-1000000" Scroll="ChangeRPM" Grid.Column="2"/>
+        <TextBlock x:Name="RPMpercent" HorizontalAlignment="Left" Margin="176,43,0,0" Grid.Row="2" Text="100" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBlock x:Name="RPM" HorizontalAlignment="Left" Margin="176,59,0,0" Grid.Row="2" Text="100" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="173,26,0,0" Grid.Row="2" Text="RPM" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBlock x:Name="PicherMotorAngle" HorizontalAlignment="Left" Margin="392,5,0,0" Grid.Row="2" Text="picher motor should add ... dgrees" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1"/>
+
+
+
+        <ScrollBar x:Name="FeedrateSB" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Margin="227,41,0,0" Maximum="1000000" Minimum="-1000000" Scroll="ChangeFeedrate" Grid.Column="2"/>
+        <TextBlock x:Name="FeedratePercent" HorizontalAlignment="Left" Margin="249,42,0,0" Grid.Row="2" Text="100" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBlock x:Name="Feedrate" HorizontalAlignment="Left" Margin="249,58,0,0" Grid.Row="2" Text="100" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="241,26,0,0" Grid.Row="2" Text="Feedrate
+" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+
+        <TextBlock x:Name="Depth" HorizontalAlignment="Left" Margin="214,104,0,0" Grid.Row="2" Text="1" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="200,83,0,0" Grid.Row="2" Text="Depth
+" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" Width="34"/>
+
+
+        <RadioButton Content="Inside" GroupName="toolposition" HorizontalAlignment="Left" Margin="194,316,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="RadioButton_Checked" IsChecked="True" Grid.Column="2"/>
+        <RadioButton Content="Ontop" GroupName="toolposition" HorizontalAlignment="Left" Margin="194,331,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="RadioButton_Checked" Grid.Column="2"/>
+        <RadioButton Content="Outside" GroupName="toolposition" HorizontalAlignment="Left" Margin="194,345,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="RadioButton_Checked" Grid.Column="2"/>
+
+        <Canvas x:Name="handsCanvas" Grid.RowSpan="2" Panel.ZIndex="3">
+            <Image x:Name="staticstand" Width="50" Height="50" Grid.Row="1" Stretch="Fill" Source="box.png" Canvas.Left="30" Canvas.Top="300"/>
+            <Image x:Name="firsthand" Width="487" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" Canvas.Left="55" Canvas.Top="314">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform x:Name="firsthandimagerender" CenterX="-243.75" CenterY="0" Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="secondhand" Width="488" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Column="1" Canvas.Left="542" Canvas.Top="314">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform x:Name="secondhandimagerender" CenterX="-243.75" CenterY="0" Angle="-179.835"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <RepeatButton Click="RepeatButton_ClickRight" Grid.Row="1" Canvas.Left="30" Canvas.Top="350">
+                <Image Source="turn-right-arrow.png" Width="20"/>
+            </RepeatButton>
+
+            <RepeatButton Click="RepeatButton_ClickLeft" Grid.Row="1" Canvas.Left="55" Canvas.Top="350">
+                <Image Source="turn-left-arrow.png" Width="20"/>
+            </RepeatButton>
+
+            <TextBlock x:Name="PicherStart"  Grid.Row="2" Grid.Column="1" Width="38" Height="38" Canvas.Left="101" Canvas.Top="499"/>
+        </Canvas>
+
+
+
+
+
+        <!--#endregion-->
+        <!--<ItemsControl Margin="0,-100,0,0" Background="Green" 
+                      Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=ActualWidth}"
+                      Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Path=ActualHeight}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>-->
+        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="100" Margin="148,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="152" Grid.Row="1" StrokeThickness="3"/>
+        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="129" Margin="148,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="152" Grid.Row="2" StrokeThickness="3"/>
+        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="128" Margin="148,129,0,0" Stroke="Black" VerticalAlignment="Top" Width="152" Grid.Row="2" StrokeThickness="3"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="167,133,0,0" Grid.Row="2" TextWrapping="Wrap" Text="current tool sensors" VerticalAlignment="Top" Height="21" Width="114"/>
+        <Rectangle Grid.Column="2" HorizontalAlignment="Left" Height="128" Margin="148,257,0,0" Stroke="Black" VerticalAlignment="Top" Width="152" Grid.Row="2" StrokeThickness="3"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="200,178,0,0" Grid.Row="2" TextWrapping="Wrap" Text="placeholder" VerticalAlignment="Top"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="167,5,0,0" Grid.Row="2" TextWrapping="Wrap" Text="current job values" VerticalAlignment="Top" Height="21" Width="114"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="178,262,0,0" Grid.Row="2" TextWrapping="Wrap" Text="cutting location" VerticalAlignment="Top" Height="21" Width="114"/>
+
+    </Grid>
+</UserControl>

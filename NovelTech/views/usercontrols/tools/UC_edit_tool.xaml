@@ -1,0 +1,45 @@
+﻿<local:BaseEditItemUserControl x:Class="NovelTech.views.usercontrols.tools.UC_edit_tool"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NovelTech.views.usercontrols.tools"
+             xmlns:t="clr-namespace:NovelTech.models.tools"
+             x:TypeArguments="t:Tool"
+             mc:Ignorable="d" Width="635" Height="410" Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Tool" HorizontalAlignment="Left" Margin="292,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Normal" FontSize="20" Grid.ColumnSpan="2"/>
+        <Label Content="Name :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="1"/>
+        <TextBox x:Name="tb_name" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="1"/>
+        <Button x:Name="b_left" Click="b_left_Click" Content="Add" HorizontalAlignment="Left" Margin="228,0,0,0" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="80" Height="30" Grid.Row="5"/>
+        <Button x:Name="b_right" Click="b_right_Click" Content="Cancel" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Width="80" Height="30" Grid.Column="1" Grid.Row="5"/>
+        <Label Content="Manufacturer :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Column="1" Grid.Row="1"/>
+        <Label Content="Length :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="2"/>
+        <Label Content="Thickness :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="TPI :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="3"/>
+        <Label Content="RPM :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="3" Grid.Column="1"/>
+        <Label Content="Feed Rate :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="4"/>
+        <Label Content="Plunge Rate :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16" Grid.Row="4" Grid.Column="1"/>
+        <TextBox x:Name="tb_manufacturer" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="1" Grid.Column="1"/>
+        <TextBox x:Name="tb_length" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="2"/>
+        <TextBox x:Name="tb_thickness" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="2" Grid.Column="1"/>
+        <TextBox x:Name="tb_tpi" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="3"/>
+        <TextBox x:Name="tb_rpm" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="3" Grid.Column="1"/>
+        <TextBox x:Name="tb_feed" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="4"/>
+        <TextBox x:Name="tb_plunge" HorizontalAlignment="Stretch" Margin="10,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="16" Grid.Row="4" Grid.Column="1"/>
+        <Button x:Name="b_revert" Visibility="Hidden" Content="Revert" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Click="b_revert_Click" Grid.Column="1"/>
+        <Button x:Name="b_equip" Visibility="Hidden" Content="Equip" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="b_equip_Click" FontSize="16" FontWeight="Bold" Width="80" Height="30"/>
+    </Grid>
+</local:BaseEditItemUserControl>

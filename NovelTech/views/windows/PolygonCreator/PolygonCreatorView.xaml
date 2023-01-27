@@ -1,0 +1,114 @@
+﻿<Window 
+    x:Name="PolygonCreatorViewName"
+    x:Class="NovelTech.views.windows.PolygonCreator.PolygonCreatorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NovelTech.views.windows.PolygonCreator"
+        xmlns:vm="clr-namespace:NovelTech.viewmodels.PolygonCreator"
+        mc:Ignorable="d"
+        Title="Polygon Creator" Height="600" Width="800">
+    <Grid >
+        <Border BorderThickness="3" BorderBrush="Black" Background="Gray" Margin="10,10,181,10"  MouseDown="Border_MouseDown"/>
+        <ToggleButton Content="Drill" Panel.ZIndex="10" Margin="624,68,109,458" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+        <Button Content="Delete" Panel.ZIndex="10" Margin="624,126,109,400" Click="Delete_Click"/>
+
+        <Button Command="{Binding FinishCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Content="Finish" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Canvas x:Name="canvas">
+
+            <ItemsControl ItemsSource="{Binding ElementName=PolygonCreatorViewName, Path=drillPoints}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <local:DragCanvas  AllowDragOutOfView="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:VertexViewModel}">
+                        <local:VertexView DataContext="{Binding }"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+
+
+
+
+
+
+
+
+
+            <ItemsControl x:Name="drillpointscontrol" ItemsSource="{Binding drillPoints}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:VertexView DataContext="{Binding }"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding Edges}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:EdgeViewModel}">
+                        <local:EdgeView DataContext="{Binding }"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+            <ItemsControl ItemsSource="{Binding Vertices}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <local:DragCanvas  AllowDragOutOfView="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:VertexViewModel}">
+                        <local:VertexView DataContext="{Binding }"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+
+            <ListBox x:Name="DrillPointsList" FontSize="10" Height="116" Width="100" Canvas.Left="690" Canvas.Top="68" SelectionChanged="DrillPointsList_SelectionChanged"/>
+
+            <TextBox x:Name="DrillPointX" Canvas.Left="649" Canvas.Top="24" Text="TextBox" TextWrapping="Wrap" Width="91" TextChanged="DrillPointX_TextChanged"/>
+            <TextBlock Canvas.Left="637" Canvas.Top="25" Text="X:" TextWrapping="Wrap"/>
+
+            <TextBox x:Name="DrillPointY" Canvas.Left="649" Canvas.Top="45" Text="TextBox" TextWrapping="Wrap" Width="91" TextChanged="DrillPointY_TextChanged"/>
+            <TextBlock Canvas.Left="637" Canvas.Top="46" Text="Y:" TextWrapping="Wrap"/>
+
+            <TextBox x:Name="Depth" Canvas.Left="650" Canvas.Top="220" Text="TextBox" TextWrapping="Wrap" Width="90" TextChanged="Depth_TextChanged" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock Canvas.Left="676" Canvas.Top="204" Text="Depth:" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <ComboBox Name="CurveSelection" Canvas.Left="637" Canvas.Top="281" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="regular" IsSelected="True"/>
+                <ComboBoxItem Content="in"/>
+                <ComboBoxItem Content="out"/>
+            </ComboBox>
+
+        </Canvas>
+    </Grid>
+
+</Window>

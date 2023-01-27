@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="NovelTech.views.usercontrols.UC_material"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NovelTech.views.usercontrols"
+             mc:Ignorable="d" 
+             xmlns:bbox="clr-namespace:ManipulatedBBox;assembly=ManipulatedBBox"
+             xmlns:main="clr-namespace:NovelTech"
+             Width="{Binding materialWidth}" Height="{Binding materialHeight}" Margin="{Binding materialMargin}" 
+             HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5, 0.5" Opacity="0.5">
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding isMaterialAttached}" Value="True">
+                    <Setter Property="Background" Value="#FFCF853C"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    <!--#region Render Transform-->
+    <UserControl.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform Angle="{Binding angle}"/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </UserControl.RenderTransform>
+    <!--#endregion-->
+    
+    <Grid x:Name="g_material" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Ellipse x:Name="elpMargin" Width="{Binding elpMarginSize}" Height="{Binding elpMarginSize}"
+                 Fill="Transparent" Stroke="Blue"
+                 StrokeThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-500"
+                 Visibility="{Binding isShowMargin, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <local:UC_pincher  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           Width="{Binding pincherSize}" Height="{Binding pincherSize}" Panel.ZIndex="5"/>
+        <bbox:BBox VerticalAlignment="Bottom" HorizontalAlignment="Left" Panel.ZIndex="50"
+                   Margin="{Binding bboxMargin}" Width="{Binding bboxSize.Width}" Height="{Binding bboxSize.Height}" 
+                   SizeRatio="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type main:MainWindow}}, 
+            Path=DataContext.dimensionRatio}">
+            <local:UC_shape/>
+        </bbox:BBox>
+    </Grid>
+</UserControl>

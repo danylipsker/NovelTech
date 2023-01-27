@@ -1,0 +1,15 @@
+﻿<Application x:Class="NovelTech.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:NovelTech"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--#region Dictionaries-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPFLibrary;component/ConvertersDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!--#endregion-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

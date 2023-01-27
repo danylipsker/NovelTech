@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="views\usercontrols\resources\**" />
+    <EmbeddedResource Remove="views\usercontrols\resources\**" />
+    <None Remove="views\usercontrols\resources\**" />
+    <Page Remove="views\usercontrols\resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="resources\images\down-arrow.png" />
+    <None Remove="resources\images\left-arrow.png" />
+    <None Remove="resources\images\right-arrow.png" />
+    <None Remove="resources\images\turn-left-arrow.png" />
+    <None Remove="resources\images\turn-right-arrow.png" />
+    <None Remove="resources\images\up-arrow.png" />
+    <None Remove="resources\jsons\materials.json" />
+    <None Remove="resources\jsons\ToolBox.json" />
+    <None Remove="views\usercontrols\box.png" />
+    <None Remove="views\usercontrols\turn-left-arrow.png" />
+    <None Remove="views\usercontrols\turn-right-arrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\images\down-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\left-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\turn-left-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\turn-right-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\up-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="views\usercontrols\turn-left-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="views\usercontrols\turn-right-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="resources\jsons\materials.json" />
+    <Resource Include="resources\jsons\ToolBox.json" />
+    <Resource Include="views\usercontrols\box.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IronXL.Excel" Version="2022.12.11262" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ManipulatedBBox\ManipulatedBBox.csproj" />
+    <ProjectReference Include="..\MethodsLibrary\MethodsLibrary.csproj" />
+    <ProjectReference Include="..\MVVMLibrary\MVVMLibrary.csproj" />
+    <ProjectReference Include="..\WPFLibrary\WPFLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\images\right-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

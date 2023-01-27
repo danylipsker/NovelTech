@@ -1,0 +1,72 @@
+﻿<Window x:Class="NovelTech.views.windows.tools.W_tools"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NovelTech.views.windows.tools"
+        xmlns:t="clr-namespace:NovelTech.models.tools"
+        mc:Ignorable="d"
+        Title="W_tools" Width="900" Height="500" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="365"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="650"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Filter"/>
+        <GroupBox Header="ToolBox" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <TreeView x:Name="tv_tools" Grid.ColumnSpan="2" TreeViewItem.Selected="tv_tools_Selected" SelectedItemChanged="tv_tools_SelectedItemChanged">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type t:Tool_family}" ItemsSource="{Binding subs}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding name}" />
+                                <TextBlock Text=" [" Foreground="Blue" />
+                                <TextBlock Text="{Binding subs.Count}" Foreground="Blue" />
+                                <TextBlock Text="]" Foreground="Blue" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type t:Tool_sub_family}" ItemsSource="{Binding blades}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding name}" />
+                                <TextBlock Text=" [" Foreground="Blue" />
+                                <TextBlock Text="{Binding blades.Count}" Foreground="Blue" />
+                                <TextBlock Text="]" Foreground="Blue" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type t:Blade_type}" ItemsSource="{Binding tools}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding name}" />
+                                <TextBlock Text=" [" Foreground="Blue" />
+                                <TextBlock Text="{Binding tools.Count}" Foreground="Blue" />
+                                <TextBlock Text="]" Foreground="Blue" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type t:Tool}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding name}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+                <Button x:Name="b_add_item" Content="Add Family" HorizontalAlignment="Stretch" Click="b_add_item_Click" Margin="0,0,5,0" Grid.Row="1"/>
+                <Button x:Name="b_clear_selection" IsEnabled="False" Content="Clear Selection" HorizontalAlignment="Stretch" Click="b_clear_selection_Click" Margin="5,0,0,0" Grid.Column="1" Grid.Row="1"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Properties" Grid.RowSpan="2">
+            <StackPanel x:Name="sp_properties"/>
+        </GroupBox>
+
+    </Grid>
+</Window>

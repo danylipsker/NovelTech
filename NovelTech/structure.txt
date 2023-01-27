@@ -1,0 +1,22 @@
+﻿main window
+{
+	job planing(type of material, shape, start job and job result)
+	uc_machinetable
+	{
+		uc_tool{show tool}
+
+		where the tools and tool info is, as well as show the simulated table
+		uc_material
+		{
+			material holds the shape and pincher we move it to show the material moving
+			uc_pincher{show pincher}
+			uc_shape{show shape}
+		}
+	}
+}
+
+for each one of these there are two code files:
+one inside xaml
+another inside the viewmodels folder
+
+polygoncreatorview is where you create shapes
