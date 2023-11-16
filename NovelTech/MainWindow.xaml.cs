@@ -85,8 +85,8 @@ namespace NovelTech
                 VM_machine_table.instance.machineWidth -= 600;
                 UC_machine_table.instance.TableWidth.Width = new GridLength(600);
 
-                //if picher is outside of the bounds it will return to the small table
-                //posiable to not allow table to become small if picher is outside
+                //if pincher is outside of the bounds it will return to the small table
+                //posiable to not allow table to become small if pincher is outside
                 if (VM_machine_table.instance.pincherX > VM_machine_table.instance.machineWidth
                 * VM_main.instance.dimensionRatio - VM_material.instance.pincherSize) VM_machine_table.instance.pincherX = 0;
             }

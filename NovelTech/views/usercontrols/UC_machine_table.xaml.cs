@@ -265,10 +265,10 @@ namespace NovelTech.views.usercontrols
 
         //public double FH_angle, SH_angle, EP_angle;
         /// <summary>
-        /// update the hands angles and positions based on picher x,y 0,0 is the picher's starting position
+        /// update the hands angles and positions based on pincher x,y 0,0 is the pincher's starting position
         /// </summary>
-        /// <param name="x">relative picher x</param>
-        /// <param name="y">relative picher x</param>
+        /// <param name="x">relative pincher x</param>
+        /// <param name="y">relative pincher x</param>
         public void ChangeAngles(double x = 0, double y = 0 )
         {
             //FH_angle = firsthandimagerender.Angle;
@@ -276,9 +276,10 @@ namespace NovelTech.views.usercontrols
             //EP_angle = 
             x = VM_material.instance.uiMaterial.Margin.Left +50;
             y = VM_material.instance.uiMaterial.Margin.Bottom + 50;
-            //the mesurments we get from VM_material give us the picher x and y that start from 0 so we use an element called picherstart and pur it in the place where the picher starts and decrease the staticstand position this givves us the picher x,y position relative to the static stand which is reqiured for our qalqulations
-            x += Canvas.GetLeft(PicherStart) - Canvas.GetLeft(staticstand);
-            y -= Canvas.GetTop(PicherStart) - Canvas.GetTop(staticstand);
+            //the mesurments we get from VM_material give us the pincher x and y that start from 0 so we use an element called pincherstart and pur it in the place where the pincher starts and decrease the staticstand position this givves us the pincher x,y position relative to the static stand which is reqiured for our qalqulations
+
+            x += Canvas.GetLeft(PincherStart) - Canvas.GetLeft(staticstand);
+            y -= Canvas.GetTop(PincherStart) - Canvas.GetTop(staticstand);
             y = -y;
             //Inverse Kinematics for a 2-Joint Robot Arm Using Geometry https://robotacademy.net.au/lesson/inverse-kinematics-for-a-2-joint-robot-arm-using-geometry/
             double second = (x * x + y * y - firsthand.Width * firsthand.Width - secondhand.Width * secondhand.Width) / (2 * firsthand.Width * secondhand.Width);
@@ -288,7 +289,7 @@ namespace NovelTech.views.usercontrols
             firsthandimagerender.Angle = toDegrees(Math.Atan(y / x)) - toDegrees(Math.Atan(secondhand.Width * Math.Sin(toRadians(secondhandimagerender.Angle)) / (firsthand.Width + secondhand.Width * Math.Cos(toRadians(secondhandimagerender.Angle)))));
             //lastly we add the first hand angle to the second hand
             secondhandimagerender.Angle += firsthandimagerender.Angle;
-            PicherMotorAngle.Text = "picher motor should add " + Math.Round(secondhandimagerender.Angle,3) + " dgrees";
+            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(secondhandimagerender.Angle,3) + " dgrees";
             //and update the second hand position based on the new angles
             ChangeHandPosition();
         }

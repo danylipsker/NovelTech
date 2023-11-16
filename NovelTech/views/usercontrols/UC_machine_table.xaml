@@ -165,7 +165,7 @@
         <TextBlock x:Name="RPMpercent" HorizontalAlignment="Left" Margin="176,43,0,0" Grid.Row="2" Text="100" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
         <TextBlock x:Name="RPM" HorizontalAlignment="Left" Margin="176,59,0,0" Grid.Row="2" Text="100" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
         <TextBlock HorizontalAlignment="Left" Margin="173,26,0,0" Grid.Row="2" Text="RPM" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2"/>
-        <TextBlock x:Name="PicherMotorAngle" HorizontalAlignment="Left" Margin="392,5,0,0" Grid.Row="2" Text="picher motor should add ... dgrees" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBlock x:Name="PincherMotorAngle" HorizontalAlignment="Left" Margin="392,5,0,0" Grid.Row="2" Text="pincher motor should add ... dgrees" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1"/>
 
 
 
@@ -214,7 +214,7 @@
                 <Image Source="turn-left-arrow.png" Width="20"/>
             </RepeatButton>
 
-            <TextBlock x:Name="PicherStart"  Grid.Row="2" Grid.Column="1" Width="38" Height="38" Canvas.Left="101" Canvas.Top="499"/>
+            <TextBlock x:Name="PincherStart"  Grid.Row="2" Grid.Column="1" Width="38" Height="38" Canvas.Left="101" Canvas.Top="499"/>
         </Canvas>
 
 
