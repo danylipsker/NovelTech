@@ -99,7 +99,6 @@ namespace NovelTech.views.usercontrols
             }
 
             UpdateRPMFeedrateValues();
-
         }
 
         public override void OnApplyTemplate()
@@ -256,8 +255,8 @@ namespace NovelTech.views.usercontrols
         /// </summary>
         public void ChangeHandPosition()
         {
-            double secondHandX = staticstand.Width / 2 + Canvas.GetLeft(staticstand) + firsthand.Width * Math.Cos(toRadians(firsthandimagerender.Angle));
-            double secondHandY = staticstand.Height / 2 - firsthand.Height / 2 + Canvas.GetTop(staticstand) + firsthand.Width * Math.Sin(toRadians(firsthandimagerender.Angle));
+            double secondHandX = staticStand.Width / 2 + Canvas.GetLeft(staticStand) + firsthand.Width * Math.Cos(toRadians(firsthandimagerender.Angle));
+            double secondHandY = staticStand.Height / 2 - firsthand.Height / 2 + Canvas.GetTop(staticStand) + firsthand.Width * Math.Sin(toRadians(firsthandimagerender.Angle));
             Canvas.SetLeft(secondhand, secondHandX);
             Canvas.SetTop(secondhand, secondHandY);
         }
@@ -269,27 +268,36 @@ namespace NovelTech.views.usercontrols
         /// </summary>
         /// <param name="x">relative pincher x</param>
         /// <param name="y">relative pincher x</param>
-        public void ChangeAngles(double x = 0, double y = 0 )
+        public void ChangeAngles()
         {
-            //FH_angle = firsthandimagerender.Angle;
-            //SH_angle = secondhandimagerender.Angle;
-            //EP_angle = 
-            x = VM_material.instance.uiMaterial.Margin.Left +50;
-            y = VM_material.instance.uiMaterial.Margin.Bottom + 50;
-            //the mesurments we get from VM_material give us the pincher x and y that start from 0 so we use an element called pincherstart and pur it in the place where the pincher starts and decrease the staticstand position this givves us the pincher x,y position relative to the static stand which is reqiured for our qalqulations
+            double x=0, y=0;
+            //get the position of pincher relative to screen
+            Point absolutePincherPostion = UC_pincher.instance.PointToScreen(new Point(UC_pincher.instance.e_pincher.Margin.Left, UC_pincher.instance.e_pincher.Margin.Top));
 
-            x += Canvas.GetLeft(PincherStart) - Canvas.GetLeft(staticstand);
-            y -= Canvas.GetTop(PincherStart) - Canvas.GetTop(staticstand);
-            y = -y;
+            //get position of staticStand relative to screen
+            Point absoluteStaticStandPosition = instance.PointToScreen(new Point(instance.staticStand.Margin.Left, instance.staticStand.Margin.Top));
+
+            //claculates the pincher x,y relative to the statichand
+            x = absolutePincherPostion.X - absoluteStaticStandPosition.X;
+            y = absolutePincherPostion.Y - absoluteStaticStandPosition.Y;
+
+            Vector staticStandVisualOffset = VisualTreeHelper.GetOffset(instance.staticStand);
+            x -= staticStandVisualOffset.X;
+            y -= staticStandVisualOffset.Y;
+
+            //offset the x,y to make it be in the center of the pincher
+            x -= UC_pincher.instance.e_pincher.Width/ 4;
+            y -= UC_pincher.instance.e_pincher.Height/4;
+
             //Inverse Kinematics for a 2-Joint Robot Arm Using Geometry https://robotacademy.net.au/lesson/inverse-kinematics-for-a-2-joint-robot-arm-using-geometry/
-            double second = (x * x + y * y - firsthand.Width * firsthand.Width - secondhand.Width * secondhand.Width) / (2 * firsthand.Width * secondhand.Width);
+            double second = ((x * x) + (y * y) - (firsthand.Width * firsthand.Width) - (secondhand.Width * secondhand.Width)) / (2 * firsthand.Width * secondhand.Width);
             //first we get the angle of the second hand
             secondhandimagerender.Angle = toDegrees(Math.Acos(second));
             //than we get the angle for the first hand
             firsthandimagerender.Angle = toDegrees(Math.Atan(y / x)) - toDegrees(Math.Atan(secondhand.Width * Math.Sin(toRadians(secondhandimagerender.Angle)) / (firsthand.Width + secondhand.Width * Math.Cos(toRadians(secondhandimagerender.Angle)))));
             //lastly we add the first hand angle to the second hand
             secondhandimagerender.Angle += firsthandimagerender.Angle;
-            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(secondhandimagerender.Angle,3) + " dgrees";
+            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(secondhandimagerender.Angle, 3) + " dgrees";
             //and update the second hand position based on the new angles
             ChangeHandPosition();
         }
@@ -312,8 +320,10 @@ namespace NovelTech.views.usercontrols
         double toDegrees(double rad)
         {
             return rad * (180 / Math.PI);
-        } 
+        }
         #endregion
+
+
     }
 }
 //toDegrees(Math.Atan(secondhand.Width * Math.Sin(toRadians(secondhandimagerender.Angle)) / (firsthand.Width + secondhand.Width * Math.Cos(toRadians(secondhandimagerender.Angle)))))

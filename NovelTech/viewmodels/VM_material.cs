@@ -200,22 +200,22 @@ namespace NovelTech.viewmodels
         void MoveUPCommandfunc()
         {
             VM_machine_table.instance.pincherY++;
-            UC_machine_table.instance.ChangeAngles(VM_machine_table.instance.pincherX, VM_machine_table.instance.pincherY);
+            UC_machine_table.instance.ChangeAngles();
         }
         void MoveDownCommandfunc()
         {
             VM_machine_table.instance.pincherY--;
-            UC_machine_table.instance.ChangeAngles(VM_machine_table.instance.pincherX, VM_machine_table.instance.pincherY);
+            UC_machine_table.instance.ChangeAngles();
         }
         void MoveLeftCommandfunc()
         {
             VM_machine_table.instance.pincherX--;
-            UC_machine_table.instance.ChangeAngles(VM_machine_table.instance.pincherX, VM_machine_table.instance.pincherY);
+            UC_machine_table.instance.ChangeAngles();
         }
         void MoveRightCommandfunc()
         {
             VM_machine_table.instance.pincherX++;
-            UC_machine_table.instance.ChangeAngles(VM_machine_table.instance.pincherX, VM_machine_table.instance.pincherY);
+            UC_machine_table.instance.ChangeAngles();
         }
 
         protected override void AddCommands()

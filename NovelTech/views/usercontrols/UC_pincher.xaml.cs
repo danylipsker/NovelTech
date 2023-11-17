@@ -18,8 +18,10 @@ namespace NovelTech.views.usercontrols
     /// </summary>
     public partial class UC_pincher : UserControl
     {
+        public static UC_pincher instance;
         public UC_pincher()
         {
+             instance = this;
             InitializeComponent();
         }
         protected override Geometry GetLayoutClip(Size layoutSlotSize)

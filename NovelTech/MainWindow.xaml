@@ -7,7 +7,7 @@
         
         xmlns:uc="clr-namespace:NovelTech.views.usercontrols"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1200" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="750" Width="1200" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <!--#region Resources-->
     <Window.Resources>
         <Style TargetType="{x:Type RepeatButton}" x:Key="ImageButtonStyle">

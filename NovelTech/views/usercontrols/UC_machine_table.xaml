@@ -185,7 +185,7 @@
         <RadioButton Content="Outside" GroupName="toolposition" HorizontalAlignment="Left" Margin="194,345,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="RadioButton_Checked" Grid.Column="2"/>
 
         <Canvas x:Name="handsCanvas" Grid.RowSpan="2" Panel.ZIndex="3">
-            <Image x:Name="staticstand" Width="50" Height="50" Grid.Row="1" Stretch="Fill" Source="box.png" Canvas.Left="30" Canvas.Top="300"/>
+            <Image x:Name="staticStand" Width="50" Height="50" Grid.Row="1" Stretch="Fill" Source="box.png" Canvas.Left="30" Canvas.Top="300"/>
             <Image x:Name="firsthand" Width="487" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" Canvas.Left="55" Canvas.Top="314">
                 <Image.RenderTransform>
                     <TransformGroup>

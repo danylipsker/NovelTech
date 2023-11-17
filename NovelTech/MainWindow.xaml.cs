@@ -91,5 +91,16 @@ namespace NovelTech
                 * VM_main.instance.dimensionRatio - VM_material.instance.pincherSize) VM_machine_table.instance.pincherX = 0;
             }
         }
+        
+        /// <summary>
+        /// calculate hands positioning on mouse move to reset hand at the start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UC_machine_table.instance.ChangeAngles();
+
+        }
     }
 }
