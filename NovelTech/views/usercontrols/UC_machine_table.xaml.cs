@@ -117,7 +117,7 @@ namespace NovelTech.views.usercontrols
             if (DesignerItemDecorator.instance.resize == null)
                 return;
             ChangeValue(this, e);
-            ChangeHandPosition();
+            ChangeArmPosition();
         }
         #region Shape size
         public void ChangeValue(object sender, EventArgs e)
@@ -234,37 +234,37 @@ namespace NovelTech.views.usercontrols
             RPMpercent.Visibility = Visibility.Visible;
         }
         #endregion
-        #region hand transform
+        #region arm transform
 
-        //used to test the hand rotation 
+        //used to test the arm rotation 
         //disabled
         private void RepeatButton_ClickLeft(object sender, RoutedEventArgs e)
         {
-            //firsthandimagerender.Angle += 10;
-            //ChangeHandPosition();
+            //arm1imagerender.Angle += 10;
+            //ChangeArmPosition();
         }
-        //used to test the hand rotation 
+        //used to test the arm rotation 
         //disabled
         private void RepeatButton_ClickRight(object sender, RoutedEventArgs e)
         {
-            //firsthandimagerender.Angle -= 10;
-            //ChangeHandPosition();
+            //arm1imagerender.Angle -= 10;
+            //ChangeArmPosition();
         }
         /// <summary>
-        /// change second hand position reletive to the first hand
+        /// change second arm position reletive to the first arm
         /// </summary>
-        public void ChangeHandPosition()
+        public void ChangeArmPosition()
         {
-            double secondHandX = staticStand.Width / 2 + Canvas.GetLeft(staticStand) + firsthand.Width * Math.Cos(toRadians(firsthandimagerender.Angle));
-            double secondHandY = staticStand.Height / 2 - firsthand.Height / 2 + Canvas.GetTop(staticStand) + firsthand.Width * Math.Sin(toRadians(firsthandimagerender.Angle));
-            Canvas.SetLeft(secondhand, secondHandX);
-            Canvas.SetTop(secondhand, secondHandY);
+            double secondArmX = staticStand.Width / 2 + Canvas.GetLeft(staticStand) + arm1.Width * Math.Cos(toRadians(arm1imagerender.Angle));
+            double secondArmY = staticStand.Height / 2 - arm1.Height / 2 + Canvas.GetTop(staticStand) + arm1.Width * Math.Sin(toRadians(arm1imagerender.Angle));
+            Canvas.SetLeft(arm2, secondArmX);
+            Canvas.SetTop(arm2, secondArmY);
         }
 
 
         //public double FH_angle, SH_angle, EP_angle;
         /// <summary>
-        /// update the hands angles and positions based on pincher x,y 0,0 is the pincher's starting position
+        /// update the arms angles and positions based on pincher x,y 0,0 is the pincher's starting position
         /// </summary>
         /// <param name="x">relative pincher x</param>
         /// <param name="y">relative pincher x</param>
@@ -277,7 +277,7 @@ namespace NovelTech.views.usercontrols
             //get position of staticStand relative to screen
             Point absoluteStaticStandPosition = instance.PointToScreen(new Point(instance.staticStand.Margin.Left, instance.staticStand.Margin.Top));
 
-            //claculates the pincher x,y relative to the statichand
+            //claculates the pincher x,y relative to the staticarm
             x = absolutePincherPostion.X - absoluteStaticStandPosition.X;
             y = absolutePincherPostion.Y - absoluteStaticStandPosition.Y;
 
@@ -290,16 +290,16 @@ namespace NovelTech.views.usercontrols
             y -= UC_pincher.instance.e_pincher.Height/4;
 
             //Inverse Kinematics for a 2-Joint Robot Arm Using Geometry https://robotacademy.net.au/lesson/inverse-kinematics-for-a-2-joint-robot-arm-using-geometry/
-            double second = ((x * x) + (y * y) - (firsthand.Width * firsthand.Width) - (secondhand.Width * secondhand.Width)) / (2 * firsthand.Width * secondhand.Width);
-            //first we get the angle of the second hand
-            secondhandimagerender.Angle = toDegrees(Math.Acos(second));
-            //than we get the angle for the first hand
-            firsthandimagerender.Angle = toDegrees(Math.Atan(y / x)) - toDegrees(Math.Atan(secondhand.Width * Math.Sin(toRadians(secondhandimagerender.Angle)) / (firsthand.Width + secondhand.Width * Math.Cos(toRadians(secondhandimagerender.Angle)))));
-            //lastly we add the first hand angle to the second hand
-            secondhandimagerender.Angle += firsthandimagerender.Angle;
-            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(secondhandimagerender.Angle, 3) + " dgrees";
-            //and update the second hand position based on the new angles
-            ChangeHandPosition();
+            double second = ((x * x) + (y * y) - (arm1.Width * arm1.Width) - (arm2.Width * arm2.Width)) / (2 * arm1.Width * arm2.Width);
+            //first we get the angle of the second arm
+            arm2imagerender.Angle = toDegrees(Math.Acos(second));
+            //than we get the angle for the first arm
+            arm1imagerender.Angle = toDegrees(Math.Atan(y / x)) - toDegrees(Math.Atan(arm2.Width * Math.Sin(toRadians(arm2imagerender.Angle)) / (arm1.Width + arm2.Width * Math.Cos(toRadians(arm2imagerender.Angle)))));
+            //lastly we add the first arm angle to the second arm
+            arm2imagerender.Angle += arm1imagerender.Angle;
+            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(arm2imagerender.Angle, 3) + " dgrees";
+            //and update the second arm position based on the new angles
+            ChangeArmPosition();
         }
 
         /// <summary>
@@ -326,4 +326,4 @@ namespace NovelTech.views.usercontrols
 
     }
 }
-//toDegrees(Math.Atan(secondhand.Width * Math.Sin(toRadians(secondhandimagerender.Angle)) / (firsthand.Width + secondhand.Width * Math.Cos(toRadians(secondhandimagerender.Angle)))))
+//toDegrees(Math.Atan(arm2.Width * Math.Sin(toRadians(arm2imagerender.Angle)) / (arm1.Width + arm2.Width * Math.Cos(toRadians(arm2imagerender.Angle)))))

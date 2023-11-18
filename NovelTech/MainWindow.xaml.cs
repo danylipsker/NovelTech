@@ -93,7 +93,7 @@ namespace NovelTech
         }
         
         /// <summary>
-        /// calculate hands positioning on mouse move to reset hand at the start
+        /// calculate arms positioning on mouse move to reset arm at the start
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

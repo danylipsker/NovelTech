@@ -184,24 +184,24 @@
         <RadioButton Content="Ontop" GroupName="toolposition" HorizontalAlignment="Left" Margin="194,331,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="RadioButton_Checked" Grid.Column="2"/>
         <RadioButton Content="Outside" GroupName="toolposition" HorizontalAlignment="Left" Margin="194,345,0,0" Grid.Row="2" VerticalAlignment="Top" Checked="RadioButton_Checked" Grid.Column="2"/>
 
-        <Canvas x:Name="handsCanvas" Grid.RowSpan="2" Panel.ZIndex="3">
+        <Canvas x:Name="armsCanvas" Grid.RowSpan="2" Panel.ZIndex="3">
             <Image x:Name="staticStand" Width="50" Height="50" Grid.Row="1" Stretch="Fill" Source="box.png" Canvas.Left="30" Canvas.Top="300"/>
-            <Image x:Name="firsthand" Width="487" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" Canvas.Left="55" Canvas.Top="314">
+            <Image x:Name="arm1" Width="487" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" Canvas.Left="55" Canvas.Top="314">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
-                        <RotateTransform x:Name="firsthandimagerender" CenterX="-243.75" CenterY="0" Angle="0"/>
+                        <RotateTransform x:Name="arm1imagerender" CenterX="-243.75" CenterY="0" Angle="0"/>
                         <TranslateTransform/>
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-            <Image x:Name="secondhand" Width="488" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Column="1" Canvas.Left="542" Canvas.Top="314">
+            <Image x:Name="arm2" Width="488" Height="22"  Grid.Row="1" Stretch="Fill" Source="box.png" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Column="1" Canvas.Left="542" Canvas.Top="314">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
-                        <RotateTransform x:Name="secondhandimagerender" CenterX="-243.75" CenterY="0" Angle="-179.835"/>
+                        <RotateTransform x:Name="arm2imagerender" CenterX="-243.75" CenterY="0" Angle="-179.835"/>
                         <TranslateTransform/>
                     </TransformGroup>
                 </Image.RenderTransform>

@@ -29,7 +29,7 @@
                             <t:RotateThumb Width="7"
                              Height="7"
                              Margin="0,-20,0,0"
-                             Cursor="Hand"
+                             Cursor="Arm"
                              VerticalAlignment="Top"
                              HorizontalAlignment="Center"/>
                             <t:ResizeThumb Height="3"
