@@ -1,19 +1,11 @@
-﻿using NovelTech.models.tools;
-using NovelTech.viewmodels.tools;
+﻿using NovelTech.viewmodels.tools;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using NovelTech.viewmodels;
 using NovelTech.views.usercontrols;
 using IronXL;
+using System.IO;
 
 namespace NovelTech.views.windows.tools
 {
@@ -27,7 +19,13 @@ namespace NovelTech.views.windows.tools
         string[,] prefixes = new string[20, 12];
         public W_edit_tool_in_action(EditToolEquippedViewModel dataContext)
         {
-            WorkBook workbook = WorkBook.Load("D:\\programing\\NovelTech\\git\\NovelTech\\NovelTech\\views\\windows\\tools\\ToolData.xlsx");
+            //get project location 
+            string novelTechDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            //get the file containing tool info
+            string toolDataPath = Path.Combine(novelTechDirectory, "views", "windows", "tools", "ToolData.xlsx");
+
+
+            WorkBook workbook = WorkBook.Load(toolDataPath);
             WorkSheet sheet = workbook.DefaultWorkSheet;
             Cell[] sheetArray = sheet.ToArray();
             for (int i = 0; i < 20; i++)
@@ -103,14 +101,6 @@ namespace NovelTech.views.windows.tools
             cuttingLengthTX.Text = prefixes[index, 11];
         }
 
-        //public W_edit_tool_in_action(Tool tool)
-        //{
-        //    InitializeComponent();
-        //    this.tool = new Tool_in_action("", 100, Tool_in_action.Orientaions.Head, tool);
-        //    mode = Mode.Create;
-        //    LoadUI();
-        //}
-
         /// <summary>
         /// happens when confirm is clicked updates the tool info
         /// </summary>
@@ -132,40 +122,6 @@ namespace NovelTech.views.windows.tools
             VM_machine_table.instance.tools[toolIndex].tool.cutting_length = float.Parse(cuttingLengthTX.Text);
             UC_machine_table.instance.InfoTextUpdate(toolIndex);
         }
-
-
-        //private void b_cancel_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.Close();
-        //}
-
-        //private void LoadUI()
-        //{
-        //    //tb_name.Text = tool.name;
-        //    //switch (tool.orientation)
-        //    //{
-        //    //    case Tool_in_action.Orientaions.Head:
-        //    //        rb_head.IsChecked = true;
-        //    //        break;
-        //    //    case Tool_in_action.Orientaions.Left:
-        //    //        rb_left.IsChecked = true;
-        //    //        break;
-        //    //    case Tool_in_action.Orientaions.Right:
-        //    //        rb_right.IsChecked = true;
-        //    //        break;
-        //    //}
-        //    //tb_position.Text = tool.position.ToString();
-        //}
-
-
-
-        //private void b_remove_Click(object sender, RoutedEventArgs e)
-        //{
-        //    viewmodels.VM_tools.toolBox.equipped.Remove(tool);
-        //    viewmodels.VM_machine_table.instance.locate_tools();
-        //    viewmodels.VM_tools.SaveToolBox();
-        //    this.Close();
-        //}
     }
 
 }

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
+using System.Xml;
 
 namespace NovelTech.views.usercontrols
 {
@@ -28,5 +22,47 @@ namespace NovelTech.views.usercontrols
         {
             return ClipToBounds ? base.GetLayoutClip(layoutSlotSize) : null;
         }
+
+        /// <summary>
+        /// calculate arms positioning on mouse move to reset arm at the start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Pincher_Loaded(object sender, RoutedEventArgs e)
+        {
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
+            string propertiesPath = Path.Combine(projectDirectory, "properties.xml");
+
+            //get the size value from the properties file
+            double pincherSize = ReadXMLDoubleValue(propertiesPath, "PincherSize");
+
+            //Set pincher size
+            e_pincher.Width = pincherSize;
+            e_pincher.Height = e_pincher.Width; 
+        }
+
+
+        /// <summary>
+        /// used to read a value of the type double from xml file 
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private double ReadXMLDoubleValue(string file, string nodeName)
+        {
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+
+            XmlNode node = doc.DocumentElement.SelectSingleNode(nodeName);
+            string text = node.InnerText;
+
+            if (double.TryParse(text, out var value)) return value;
+            else
+            {
+                throw new Exception("tried to read a non double value, check your XML file");
+            }
+        }
+
     }
 }

@@ -19,7 +19,7 @@
     <!--#endregion-->
     
     <Grid HorizontalAlignment="Center">
-        <Ellipse x:Name="e_pincher" HorizontalAlignment="Center" Height="37.5" Stroke="Black" VerticalAlignment="Center" Width="37.5"/>
+        <Ellipse x:Name="e_pincher" HorizontalAlignment="Center" Height="37.5" Stroke="Black" VerticalAlignment="Center" Width="37.5" Loaded="Pincher_Loaded"/>
 
     </Grid>
 </UserControl>
