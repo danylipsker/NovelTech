@@ -1,0 +1,30 @@
+<root>
+  <ToolOne>
+    <Name>one name</Name>
+    <Manufacturer>one manufacturer</Manufacturer>
+    <Length>3</Length>
+    <Thickness>2</Thickness>
+    <Tpi>40</Tpi>
+    <Rpm>1</Rpm>
+    <FeedRate>1</FeedRate>
+    <PlungeRate>1</PlungeRate>
+    <WorkMaterial>wood</WorkMaterial>
+    <InnerDiameter>1.2</InnerDiameter>
+    <OuterDiameter>25</OuterDiameter>
+    <CuttingLength>20</CuttingLength>
+  </ToolOne>
+  <ToolTwo>
+    <Name>two name</Name>
+    <Manufacturer>two manufacturer</Manufacturer>
+    <Length>2</Length>
+    <Thickness>5</Thickness>
+    <Tpi>44</Tpi>
+    <Rpm>32</Rpm>
+    <FeedRate>21</FeedRate>
+    <PlungeRate>2</PlungeRate>
+    <WorkMaterial>0</WorkMaterial>
+    <InnerDiameter>0</InnerDiameter>
+    <OuterDiameter>0</OuterDiameter>
+    <CuttingLength>0</CuttingLength>
+  </ToolTwo>
+</root>

@@ -6,6 +6,7 @@ using NovelTech.viewmodels;
 using NovelTech.views.usercontrols;
 using IronXL;
 using System.IO;
+using System.Xml;
 
 namespace NovelTech.views.windows.tools
 {
@@ -108,6 +109,30 @@ namespace NovelTech.views.windows.tools
         /// <param name="e"></param>
         private void b_confirm_click(object sender, RoutedEventArgs e)
         {
+
+            string novelTechProjectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
+            string filePath = Path.Combine(novelTechProjectDirectory, "ToolProperties.xml");
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePath);
+
+
+            SetXMLValue(filePath, "Name", nameTX.Text);
+            SetXMLValue(filePath, "Manufacturer", manufacturerTX.Text);
+            SetXMLValue(filePath, "Length", lengthTX.Text);
+            SetXMLValue(filePath, "Thickness", thicknessTX.Text);
+            SetXMLValue(filePath, "Tpi", tpiTX.Text);
+            SetXMLValue(filePath, "Rpm", rpmTX.Text);
+            SetXMLValue(filePath, "FeedRate", feedrateTX.Text);
+            SetXMLValue(filePath, "PlungeRate", plungeRateTX.Text);
+            SetXMLValue(filePath, "WorkMaterial", workMaterialTX.Text);
+            SetXMLValue(filePath, "InnerDiameter", innerDiameterTX.Text);
+            SetXMLValue(filePath, "OuterDiameter", outerDiameterTX.Text);
+            SetXMLValue(filePath, "CuttingLength", cuttingLengthTX.Text);
+
+
+
+
             VM_machine_table.instance.tools[toolIndex].tool.name = nameTX.Text;
             VM_machine_table.instance.tools[toolIndex].tool.manufacturer = manufacturerTX.Text;
             VM_machine_table.instance.tools[toolIndex].tool.length = float.Parse(lengthTX.Text);
@@ -122,6 +147,38 @@ namespace NovelTech.views.windows.tools
             VM_machine_table.instance.tools[toolIndex].tool.cutting_length = float.Parse(cuttingLengthTX.Text);
             UC_machine_table.instance.InfoTextUpdate(toolIndex);
         }
+
+
+        /// <summary>
+        /// used to read a value of the type double from xml file 
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private void SetXMLValue(string file, string nodeName, string value)
+        {
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+            string toolNode = "";
+            switch (toolIndex)
+            {
+                case 0:
+                     toolNode = "ToolOne";
+                    break;
+                case 1:
+                    toolNode = "ToolTwo";
+                    break;
+
+            }
+
+            XmlNode node = doc.DocumentElement.SelectSingleNode(toolNode).SelectSingleNode(nodeName);
+            node.InnerText = value;
+
+            doc.Save(file);
+        }
+
+
     }
 
 }

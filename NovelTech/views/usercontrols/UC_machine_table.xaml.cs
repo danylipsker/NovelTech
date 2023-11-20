@@ -34,10 +34,36 @@ namespace NovelTech.views.usercontrols
             RPM.Visibility = Visibility.Collapsed;
             RPMpercent.Visibility = Visibility.Collapsed;
 
-            VM_machine_table.instance.tools.Add(new models.tools.Tool_in_action(new models.tools.Tool("2", "2", 10, 10, 10, 99, 10, 10, 10,25)));
+
+            string novelTechProjectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
+            string filePath = Path.Combine(novelTechProjectDirectory, "ToolProperties.xml");
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePath);
+
+
+            
+
+
+            VM_machine_table.instance.tools.Add(new models.tools.Tool_in_action(new models.tools.Tool(ReadXMLValue(filePath, "ToolOne", "Name"),
+            ReadXMLValue(filePath, "ToolOne", "Manufacturer"),
+            ReadXMLFloatValue(filePath, "ToolOne", "Length"),
+            ReadXMLFloatValue(filePath, "ToolOne", "Thickness"),
+            ReadXMLFloatValue(filePath, "ToolOne", "Tpi"),
+            ReadXMLFloatValue(filePath, "ToolOne", "Rpm"),
+            ReadXMLFloatValue(filePath, "ToolOne", "FeedRate"),
+            ReadXMLFloatValue(filePath, "ToolOne", "PlungeRate"), 10,25)));
             VM_tools.toolBox.equipped[0] = (VM_machine_table.instance.tools[0]);
 
-            VM_machine_table.instance.tools.Add(new models.tools.Tool_in_action(new models.tools.Tool("3", "3", 3, 3, 3, 3, 3, 3, 3,225)));
+
+            VM_machine_table.instance.tools.Add(new models.tools.Tool_in_action(new models.tools.Tool(ReadXMLValue(filePath, "ToolTwo", "Name"),
+            ReadXMLValue(filePath, "ToolTwo", "Manufacturer"),
+            ReadXMLFloatValue(filePath, "ToolTwo", "Length"),
+            ReadXMLFloatValue(filePath, "ToolTwo", "Thickness"),
+            ReadXMLFloatValue(filePath, "ToolTwo", "Tpi"),
+            ReadXMLFloatValue(filePath, "ToolTwo", "Rpm"),
+            ReadXMLFloatValue(filePath, "ToolTwo", "FeedRate"),
+            ReadXMLFloatValue(filePath, "ToolTwo", "PlungeRate"), 3,225)));
             VM_tools.toolBox.equipped[1] = (VM_machine_table.instance.tools[1]);
 
             uC_Tools[0] = Saw;
@@ -51,6 +77,50 @@ namespace NovelTech.views.usercontrols
             InfoTextUpdate(0);
             UpdateRPMFeedrateValues();
         }
+
+
+        /// <summary>
+        /// used to read a value from xml file 
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private string ReadXMLValue(string file,string outerNodeName, string nodeName)
+        {
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+
+            XmlNode node = doc.DocumentElement.SelectSingleNode(outerNodeName).SelectSingleNode(nodeName);
+            string text = node.InnerText;
+            return text;
+        }
+
+
+        /// <summary>
+        /// used to read a value of the type double from xml file 
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private float ReadXMLFloatValue(string file, string outerNodeName, string nodeName)
+        {
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+
+            XmlNode node = doc.DocumentElement.SelectSingleNode(outerNodeName).SelectSingleNode(nodeName);
+            string text = node.InnerText;
+
+            if (float.TryParse(text, out var value)) {
+                return value;
+            }
+            else
+            {
+                throw new Exception("tried to read a non float value, check your XML file");
+            }
+        }
+
 
         /// <summary>
         /// when called updates the info text of the tool in toolIndex position in VM_machine_table.instance.tools

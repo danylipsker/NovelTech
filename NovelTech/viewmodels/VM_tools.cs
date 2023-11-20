@@ -17,11 +17,15 @@ namespace NovelTech.viewmodels
         private static ToolBox GetToolBox()
         {
             ToolBox toolBox = new ToolBox();
-            string path = $"{Directory.GetCurrentDirectory()}\\{VM_main.instance.appName}\\{FileName}.json";
-            if (File.Exists(path))
+            try
             {
-                toolBox = JsonConvert.DeserializeObject<ToolBox>(File.ReadAllText(path));
+                string path = $"{Directory.GetCurrentDirectory()}\\{VM_main.instance.appName}\\{FileName}.json";
+                if (File.Exists(path))
+                {
+                    toolBox = JsonConvert.DeserializeObject<ToolBox>(File.ReadAllText(path));
+                }
             }
+            catch (Exception ex) { }
             return toolBox;
         }
 
