@@ -4,6 +4,7 @@ using NovelTech.viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Xml;
 
 
 namespace NovelTech.views.usercontrols
@@ -107,18 +108,12 @@ namespace NovelTech.views.usercontrols
             (DataContext as VM_machine_table).uiMachineTable = instance;
             (DataContext as VM_machine_table).uiTools = noNeedUiTools;
         }
+
         protected override Geometry GetLayoutClip(Size layoutSlotSize)
         {
             return ClipToBounds ? base.GetLayoutClip(layoutSlotSize) : null;
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (DesignerItemDecorator.instance.resize == null)
-                return;
-            ChangeValue(this, e);
-            ChangeArmPosition();
-        }
         #region Shape size
         public void ChangeValue(object sender, EventArgs e)
         {
@@ -235,34 +230,48 @@ namespace NovelTech.views.usercontrols
         }
         #endregion
         #region arm transform
-
-        //used to test the arm rotation 
-        //disabled
+        /// <summary>
+        /// used to test the arm rotation 
+        /// disabled
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RepeatButton_ClickLeft(object sender, RoutedEventArgs e)
         {
-            //arm1imagerender.Angle += 10;
+            //armOneimagerender.Angle += 10;
             //ChangeArmPosition();
         }
-        //used to test the arm rotation 
-        //disabled
+
+        /// <summary>
+        /// used to test the arm rotation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RepeatButton_ClickRight(object sender, RoutedEventArgs e)
         {
-            //arm1imagerender.Angle -= 10;
+            //armOneimagerender.Angle -= 10;
             //ChangeArmPosition();
         }
+
         /// <summary>
         /// change second arm position reletive to the first arm
         /// </summary>
         public void ChangeArmPosition()
         {
-            double secondArmX = staticStand.Width / 2 + Canvas.GetLeft(staticStand) + arm1.Width * Math.Cos(toRadians(arm1imagerender.Angle));
-            double secondArmY = staticStand.Height / 2 - arm1.Height / 2 + Canvas.GetTop(staticStand) + arm1.Width * Math.Sin(toRadians(arm1imagerender.Angle));
-            Canvas.SetLeft(arm2, secondArmX);
-            Canvas.SetTop(arm2, secondArmY);
+            double tmp1 = Canvas.GetLeft(staticStand);
+            double tmp2 = Canvas.GetTop(staticStand);
+
+            double armOneX = armOne.Width * Math.Cos(toRadians(armOneimagerender.Angle));
+            double armTwoX = staticStand.Width / 2 + Canvas.GetLeft(staticStand) + armOneX;
+
+            double armOneY = +armOne.Width * Math.Sin(toRadians(armOneimagerender.Angle));
+            double armTwoY = staticStand.Height / 2 - armOne.Height / 2 + Canvas.GetTop(staticStand) + armOneY;
+
+
+            Canvas.SetLeft(armTwo, armTwoX);
+            Canvas.SetTop(armTwo, armTwoY);
         }
 
-
-        //public double FH_angle, SH_angle, EP_angle;
         /// <summary>
         /// update the arms angles and positions based on pincher x,y 0,0 is the pincher's starting position
         /// </summary>
@@ -290,14 +299,17 @@ namespace NovelTech.views.usercontrols
             y -= UC_pincher.instance.e_pincher.Height/4;
 
             //Inverse Kinematics for a 2-Joint Robot Arm Using Geometry https://robotacademy.net.au/lesson/inverse-kinematics-for-a-2-joint-robot-arm-using-geometry/
-            double second = ((x * x) + (y * y) - (arm1.Width * arm1.Width) - (arm2.Width * arm2.Width)) / (2 * arm1.Width * arm2.Width);
+            double second = ((x * x) + (y * y) - (armOne.Width * armOne.Width) - (armTwo.Width * armTwo.Width)) / (2 * armOne.Width * armTwo.Width);
             //first we get the angle of the second arm
-            arm2imagerender.Angle = toDegrees(Math.Acos(second));
+            armTwoimagerender.Angle = toDegrees(Math.Acos(second));
+
             //than we get the angle for the first arm
-            arm1imagerender.Angle = toDegrees(Math.Atan(y / x)) - toDegrees(Math.Atan(arm2.Width * Math.Sin(toRadians(arm2imagerender.Angle)) / (arm1.Width + arm2.Width * Math.Cos(toRadians(arm2imagerender.Angle)))));
+            armOneimagerender.Angle = toDegrees(Math.Atan(y / x)) - toDegrees(Math.Atan(armTwo.Width * Math.Sin(toRadians(armTwoimagerender.Angle)) / (armOne.Width + armTwo.Width * Math.Cos(toRadians(armTwoimagerender.Angle)))));
+
             //lastly we add the first arm angle to the second arm
-            arm2imagerender.Angle += arm1imagerender.Angle;
-            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(arm2imagerender.Angle, 3) + " dgrees";
+            armTwoimagerender.Angle += armOneimagerender.Angle;
+            PincherMotorAngle.Text = "pincher motor should add " + Math.Round(armTwoimagerender.Angle, 3) + " dgrees";
+
             //and update the second arm position based on the new angles
             ChangeArmPosition();
         }
@@ -324,6 +336,58 @@ namespace NovelTech.views.usercontrols
         #endregion
 
 
+        /// <summary>
+        /// calculate arms positioning on mouse move to reset arm at the start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
+            string propertiesPath = Path.Combine(projectDirectory, "properties.xml");
+
+            //get the width values from the properties file
+            double armOneLength = ReadXMLDoubleValue(propertiesPath, "ArmOneLength");
+            double armTwoLength = ReadXMLDoubleValue(propertiesPath, "ArmTwoLength");
+
+            //set first arm width
+            armOne.Width = armOneLength;
+            armOneimagerender.CenterX = -armOne.Width / 2;
+
+            //set second arm width
+            armTwo.Width = armTwoLength;
+            armTwoimagerender.CenterX = -armTwo.Width / 2;
+
+
+
+            //reset arm to the pincher position
+            instance.ChangeAngles();
+
+
+
+        }
+
+        /// <summary>
+        /// used to read a value of the type double from xml file 
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private double ReadXMLDoubleValue(string file, string nodeName)
+        {
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+
+            XmlNode node = doc.DocumentElement.SelectSingleNode(nodeName);
+            string text = node.InnerText;
+
+            if (double.TryParse(text, out var value)) return value;
+            else
+            {
+                throw new Exception("tried to read a non double value, check your XML file");
+            }
+        }
+
     }
 }
-//toDegrees(Math.Atan(arm2.Width * Math.Sin(toRadians(arm2imagerender.Angle)) / (arm1.Width + arm2.Width * Math.Cos(toRadians(arm2imagerender.Angle)))))

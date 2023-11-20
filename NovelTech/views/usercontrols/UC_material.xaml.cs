@@ -35,6 +35,7 @@ namespace NovelTech.views.usercontrols
             VM_material.instance.elpMargin = elpMargin;
             VM_material.instance.uiMaterial = this;
         }
+
         protected override Geometry GetLayoutClip(Size layoutSlotSize)
         {
             UC_machine_table.instance.ChangeAngles();

@@ -4,6 +4,9 @@ using NovelTech.viewmodels.tools;
 using NovelTech.views.usercontrols;
 using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Xml;
 
 namespace NovelTech
 {
@@ -92,15 +95,5 @@ namespace NovelTech
             }
         }
         
-        /// <summary>
-        /// calculate arms positioning on mouse move to reset arm at the start
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UC_machine_table.instance.ChangeAngles();
-
-        }
     }
 }

@@ -366,7 +366,7 @@ namespace NovelTech.classes.Sawing
             steps.Add(new Saw_step() { action = "rotate", value = angle, tool = toolname });
             TransformGroup temp = UC_material.instance.RenderTransform as TransformGroup;
             RotateTransform temp1 = temp.Children[2] as RotateTransform;
-            steps.Add(new Saw_step() { action = "EP_rotation", value = temp1.Angle - UC_machine_table.instance.arm2imagerender.Angle, tool = toolname });
+            steps.Add(new Saw_step() { action = "EP_rotation", value = temp1.Angle - UC_machine_table.instance.armTwoimagerender.Angle, tool = toolname });
 
         }
         private void set_move(double x = 0, double y = 0, string toolname = "Saw")
@@ -380,23 +380,23 @@ namespace NovelTech.classes.Sawing
             {
                 steps.Add(new Saw_step() { action = "move_x", value = x / 3 * 4, tool = toolname });
                 
-                steps.Add(new Saw_step() { action = "FA_rotation", value = UC_machine_table.instance.arm1imagerender.Angle, tool = toolname });
-                steps.Add(new Saw_step() { action = "SA_rotation", value = UC_machine_table.instance.arm2imagerender.Angle, tool = toolname });
+                steps.Add(new Saw_step() { action = "FA_rotation", value = UC_machine_table.instance.armOneimagerender.Angle, tool = toolname });
+                steps.Add(new Saw_step() { action = "SA_rotation", value = UC_machine_table.instance.armTwoimagerender.Angle, tool = toolname });
 
                 TransformGroup temp = UC_material.instance.RenderTransform as TransformGroup;
                 RotateTransform temp1 = temp.Children[2] as RotateTransform;
-                steps.Add(new Saw_step() { action = "EP_rotation", value = temp1.Angle + UC_machine_table.instance.arm2imagerender.Angle, tool = toolname });
+                steps.Add(new Saw_step() { action = "EP_rotation", value = temp1.Angle + UC_machine_table.instance.armTwoimagerender.Angle, tool = toolname });
             }
             if (y != 0)
             {
                 steps.Add(new Saw_step() { action = "move_y", value = y / 3 * 4, tool = toolname });
                 
-                steps.Add(new Saw_step() { action = "FA_rotation", value = UC_machine_table.instance.arm1imagerender.Angle, tool = toolname });
-                steps.Add(new Saw_step() { action = "SA_rotation", value = UC_machine_table.instance.arm2imagerender.Angle, tool = toolname });
+                steps.Add(new Saw_step() { action = "FA_rotation", value = UC_machine_table.instance.armOneimagerender.Angle, tool = toolname });
+                steps.Add(new Saw_step() { action = "SA_rotation", value = UC_machine_table.instance.armTwoimagerender.Angle, tool = toolname });
 
                 TransformGroup temp = UC_material.instance.RenderTransform as TransformGroup;
                 RotateTransform temp1 = temp.Children[2] as RotateTransform;
-                steps.Add(new Saw_step() { action = "EP_rotation", value = temp1.Angle - UC_machine_table.instance.arm2imagerender.Angle, tool = toolname });
+                steps.Add(new Saw_step() { action = "EP_rotation", value = temp1.Angle - UC_machine_table.instance.armTwoimagerender.Angle, tool = toolname });
 
             }
         }
