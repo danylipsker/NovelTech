@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text;
+using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Shapes;
-using MVVMLibrary;
+using System.Xml;
 using MVVMLibrary.ViewModels;
 using NovelTech.models.materials;
 using NovelTech.views.usercontrols;
@@ -126,11 +123,52 @@ namespace NovelTech.viewmodels
         }
 
         #region Property - pincherSize
-        private double _pincherSize = 50;
+
+        /// <summary>
+        /// calculate arms positioning on mouse move to reset arm at the start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static double GetPincherSize()
+        {
+
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
+            string propertiesPath = System.IO.Path.Combine(projectDirectory, "properties.xml");
+
+            //get the size value from the properties file
+            double pincherSize = ReadXMLDoubleValue(propertiesPath, "PincherSize");
+
+            return pincherSize;
+        }
+
+
+        /// <summary>
+        /// used to read a value of the type double from xml file 
+        /// </summary>
+        /// <param name="nodeName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static double ReadXMLDoubleValue(string file, string nodeName)
+        {
+            //load xml file with the size of the arms
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+
+            XmlNode node = doc.DocumentElement.SelectSingleNode(nodeName);
+            string text = node.InnerText;
+
+            if (double.TryParse(text, out var value)) return value * VM_main.instance.dimensionRatio;
+            else
+            {
+                throw new Exception("tried to read a non double value, check your XML file");
+            }
+        }
+
+        private double _pincherSize = GetPincherSize();
 
         public double pincherSize
         {
-            get { return _pincherSize * VM_main.instance.dimensionRatio; }
+            get { return _pincherSize; }
             set { _pincherSize = value; OnPropertyChanged(); }
         }
         #endregion

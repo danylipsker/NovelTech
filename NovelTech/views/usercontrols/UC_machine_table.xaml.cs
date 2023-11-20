@@ -249,9 +249,6 @@ namespace NovelTech.views.usercontrols
         /// </summary>
         public void ChangeArmPosition()
         {
-            double tmp1 = Canvas.GetLeft(staticStand);
-            double tmp2 = Canvas.GetTop(staticStand);
-
             double armOneX = armOne.Width * Math.Cos(toRadians(armOneimagerender.Angle));
             double armTwoX = staticStand.Width / 2 + Canvas.GetLeft(staticStand) + armOneX;
 
@@ -281,13 +278,19 @@ namespace NovelTech.views.usercontrols
             x = absolutePincherPostion.X - absoluteStaticStandPosition.X;
             y = absolutePincherPostion.Y - absoluteStaticStandPosition.Y;
 
+            //make the positioning start from the staticstand
             Vector staticStandVisualOffset = VisualTreeHelper.GetOffset(instance.staticStand);
             x -= staticStandVisualOffset.X;
-            y -= staticStandVisualOffset.Y;
+            y -= staticStandVisualOffset.Y ;
+
+            //calculate in the value of the stand size
+            x -= instance.staticStand.Width / 2;
+            y -= instance.staticStand.Height / 2;
 
             //offset the x,y to make it be in the center of the pincher
-            x -= UC_pincher.instance.e_pincher.Width/ 4;
-            y -= UC_pincher.instance.e_pincher.Height/4;
+            x += UC_pincher.instance.e_pincher.Width / 2;
+            y += UC_pincher.instance.e_pincher.Height / 2;
+
 
             //Inverse Kinematics for a 2-Joint Robot Arm Using Geometry https://robotacademy.net.au/lesson/inverse-kinematics-for-a-2-joint-robot-arm-using-geometry/
             double second = ((x * x) + (y * y) - (armOne.Width * armOne.Width) - (armTwo.Width * armTwo.Width)) / (2 * armOne.Width * armTwo.Width);
@@ -337,6 +340,7 @@ namespace NovelTech.views.usercontrols
             string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName;
             string propertiesPath = Path.Combine(projectDirectory, "properties.xml");
 
+            #region SetArmLength
             //get the width values from the properties file
             double armOneLength = ReadXMLDoubleValue(propertiesPath, "ArmOneLength");
             double armTwoLength = ReadXMLDoubleValue(propertiesPath, "ArmTwoLength");
@@ -347,9 +351,17 @@ namespace NovelTech.views.usercontrols
 
             //set second arm width
             armTwo.Width = armTwoLength;
-            armTwoimagerender.CenterX = -armTwo.Width / 2;
+            armTwoimagerender.CenterX = -armTwo.Width / 2; 
+            #endregion
 
-
+            #region set arm width
+            //get arms width 
+            double armOneWidth = ReadXMLDoubleValue(propertiesPath, "ArmOneWidth");
+            double armTwoWidth = ReadXMLDoubleValue(propertiesPath, "ArmTwoWidth");
+            //set arms width
+            armOne.Height = armOneWidth;
+            armTwo.Height = armTwoWidth; 
+            #endregion
 
             //reset arm to the pincher position
             instance.ChangeAngles();
@@ -373,7 +385,7 @@ namespace NovelTech.views.usercontrols
             XmlNode node = doc.DocumentElement.SelectSingleNode(nodeName);
             string text = node.InnerText;
 
-            if (double.TryParse(text, out var value)) return value;
+            if (double.TryParse(text, out var value)) return value * VM_main.instance.dimensionRatio;
             else
             {
                 throw new Exception("tried to read a non double value, check your XML file");

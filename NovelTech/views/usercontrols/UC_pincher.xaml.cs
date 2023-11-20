@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.IO;
 using System.Xml;
+using NovelTech.viewmodels;
 
 namespace NovelTech.views.usercontrols
 {
@@ -38,7 +39,9 @@ namespace NovelTech.views.usercontrols
 
             //Set pincher size
             e_pincher.Width = pincherSize;
-            e_pincher.Height = e_pincher.Width; 
+            e_pincher.Height = e_pincher.Width;
+
+            UC_machine_table.instance.ChangeAngles();
         }
 
 
@@ -57,7 +60,7 @@ namespace NovelTech.views.usercontrols
             XmlNode node = doc.DocumentElement.SelectSingleNode(nodeName);
             string text = node.InnerText;
 
-            if (double.TryParse(text, out var value)) return value;
+            if (double.TryParse(text, out var value)) return value * VM_main.instance.dimensionRatio;
             else
             {
                 throw new Exception("tried to read a non double value, check your XML file");

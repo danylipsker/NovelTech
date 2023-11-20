@@ -1,9 +1,9 @@
 <root>
 	<ArmOneLength>600</ArmOneLength>
 	<ArmTwoLength>500</ArmTwoLength>
-	<PincherSize>37.5</PincherSize>
-	<ArmOneThickness>37.5</ArmOneThickness>
-	<ArmTwoThickness>37.5</ArmTwoThickness>
+	<PincherSize>200</PincherSize>
+	<ArmOneWidth>30</ArmOneWidth>
+	<ArmTwoWidth>30</ArmTwoWidth>
 	<Margin>37.5</Margin>
 	<TableSizeX>37.5</TableSizeX>
 	<TableSizeY>37.5</TableSizeY>
